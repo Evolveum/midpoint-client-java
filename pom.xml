@@ -36,7 +36,7 @@
         <midpoint.version>3.8</midpoint.version>
         <testng.version>6.8.8</testng.version>
         <cxf.version>3.1.6</cxf.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.1</jackson.version>
         <jaxb.version>2.3.0</jaxb.version>
     </properties>
 

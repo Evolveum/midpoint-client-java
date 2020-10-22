@@ -36,5 +36,7 @@ public interface RpcService<T> extends Post<T> {
 	// Preliminary implementation. Adapt as necessary.
 	ExecuteScriptRpcService<ExecuteScriptResponseType> executeScript(ExecuteScriptType request);
 
+    ExecuteScriptRpcService<ExecuteScriptResponseType> executeScript(ExecuteScriptType request, long timeout);
+
 	ExecuteScriptRpcService<ObjectReference<TaskType>> executeScriptAsync(ExecuteScriptType request);
 }

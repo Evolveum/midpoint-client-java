@@ -17,7 +17,6 @@ package com.evolveum.midpoint.client.impl.restjaxb;
 
 import com.evolveum.midpoint.client.api.*;
 import com.evolveum.midpoint.client.api.exception.CommonException;
-import com.evolveum.midpoint.client.api.verb.Post;
 import com.evolveum.midpoint.xml.ns._public.common.api_types_3.ExecuteScriptResponseType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.TaskType;
 import com.evolveum.midpoint.xml.ns._public.model.scripting_3.ExecuteScriptType;
@@ -59,6 +58,11 @@ public class RestJaxbRpcService<T> implements RpcService<T> {
 	public ExecuteScriptRpcService<ExecuteScriptResponseType> executeScript(ExecuteScriptType script) {
 		return new RestJaxbExecuteScriptRpcService<>(getService(), EXECUTE_SCRIPT_PATH, script, false);
 	}
+
+    @Override
+    public ExecuteScriptRpcService<ExecuteScriptResponseType> executeScript(ExecuteScriptType script, long timeout) {
+        return new RestJaxbExecuteScriptRpcService<>(getService(), EXECUTE_SCRIPT_PATH, script, false, timeout);
+    }
 
     @Override
     public ExecuteScriptRpcService<ObjectReference<TaskType>> executeScriptAsync(ExecuteScriptType script) {

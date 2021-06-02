@@ -206,7 +206,7 @@ public class RestJaxbQueryBuilder<O extends ObjectType> implements ConditionEntr
 
 	@Override
 	public MatchingRuleEntry<O> endsWith(Object value) {
-		Element substring = queryForService.getDomSerializer().createSubstringFilter(itemPath, value, true, false);
+		Element substring = queryForService.getDomSerializer().createSubstringFilter(itemPath, value, false, true);
 		return new RestJaxbQueryBuilder<O>(this, substring, owner);
 	}
 

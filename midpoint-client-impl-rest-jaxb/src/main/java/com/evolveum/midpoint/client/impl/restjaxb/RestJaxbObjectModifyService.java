@@ -100,6 +100,7 @@ public class RestJaxbObjectModifyService<O extends ObjectType> extends AbstractO
 
         switch (response.getStatus()) {
             case 204:
+            case 240: // handled error
                 RestJaxbObjectReference<O> ref = new RestJaxbObjectReference<>(getService(), getType(), getOid());
                 return new RestJaxbCompletedFuture<>(ref);
             case 250:

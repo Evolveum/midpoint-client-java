@@ -37,7 +37,7 @@
         <midpoint.version>4.7-SNAPSHOT</midpoint.version>
 
         <testng.version>7.6.1</testng.version>
-        <cxf.version>3.5.3</cxf.version>
+        <cxf.version>3.5.5</cxf.version>
         <!-- Normally both versions are the same but sometimes databind is patched and core stays. -->
         <jackson.version>2.13.4</jackson.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>

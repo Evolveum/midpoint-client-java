@@ -24,6 +24,7 @@ import com.evolveum.midpoint.client.api.exception.ObjectNotFoundException;
 import com.evolveum.midpoint.client.api.exception.SchemaException;
 import com.evolveum.midpoint.client.api.verb.Get;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
+import com.evolveum.prism.xml.ns._public.query_3.QueryType;
 
 /**
  *
@@ -40,6 +41,8 @@ public interface QueryExit<O extends ObjectType> extends Get<SearchResult<O>> {
 	 * Returns search service with the query set.
 	 */
 	SearchService<O> build();
+
+    SearchService<O> build(QueryType query);
 
 //	public ConditionEntry<O> item(ItemPathType itemPath);
 //	public ConditionEntry<O> item(QName... qnames);

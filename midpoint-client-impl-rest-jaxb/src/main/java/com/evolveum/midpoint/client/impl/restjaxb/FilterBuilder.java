@@ -117,6 +117,11 @@ public class FilterBuilder<O extends ObjectType> implements FilterEntryOrEmpty<O
 
 	}
 
+    @Override
+    public SearchService<O> build(QueryType query) {
+        return new RestJaxbSearchService<>(service, type, query);
+    }
+
 
 	@Override
 	public ConditionEntry<O> item(ItemPathType itemPath) {

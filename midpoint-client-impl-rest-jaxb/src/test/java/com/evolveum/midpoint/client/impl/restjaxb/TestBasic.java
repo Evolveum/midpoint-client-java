@@ -22,6 +22,9 @@ import com.evolveum.midpoint.client.api.exception.ObjectNotFoundException;
 import com.evolveum.midpoint.client.api.exception.PolicyViolationException;
 import com.evolveum.midpoint.xml.ns._public.common.api_types_3.PolicyItemsDefinitionType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.*;
+import com.evolveum.prism.xml.ns._public.query_3.PagingType;
+import com.evolveum.prism.xml.ns._public.query_3.QueryType;
+import com.evolveum.prism.xml.ns._public.query_3.SearchFilterType;
 import com.evolveum.prism.xml.ns._public.types_3.ItemPathType;
 
 import org.apache.cxf.endpoint.Server;
@@ -203,6 +206,30 @@ public class TestBasic extends AbstractTest {
         // THEN
         assertEquals(result.size(), 0);
     }
+
+    @Test
+    public void test014UserFilterQuerySearchMock() throws Exception {
+        Service service = getService();
+
+        QueryType query = new QueryType();
+        PagingType pagingType = new PagingType();
+        pagingType.setMaxSize(1);
+        pagingType.setOffset(0);
+        query.setPaging(pagingType);
+        SearchFilterType searchFilterType = new SearchFilterType();
+        searchFilterType.setText("name contains \"a\" or familyName startsWith \"X\"");
+        query.setFilter(searchFilterType);
+
+        SearchResult<UserType> result = service.users().search()
+                .queryFor(UserType.class)
+                .build(query)
+                .options()
+                .resolveNames()
+                .get();
+
+        assertEquals(result.size(), 0);
+    }
+
 
     @Test
     public void test011ValuePolicyGet() throws Exception {

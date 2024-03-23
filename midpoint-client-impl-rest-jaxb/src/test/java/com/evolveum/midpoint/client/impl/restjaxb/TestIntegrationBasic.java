@@ -20,6 +20,9 @@ import com.evolveum.midpoint.client.api.exception.AuthenticationException;
 import com.evolveum.midpoint.client.api.exception.SchemaException;
 import com.evolveum.midpoint.client.api.query.AtomicFilterExit;
 import com.evolveum.midpoint.client.api.query.ConditionEntry;
+import com.evolveum.prism.xml.ns._public.query_3.PagingType;
+import com.evolveum.prism.xml.ns._public.query_3.QueryType;
+import com.evolveum.prism.xml.ns._public.query_3.SearchFilterType;
 import com.evolveum.prism.xml.ns._public.types_3.ItemPathType;
 
 import org.apache.commons.lang3.StringUtils;
@@ -379,6 +382,30 @@ public class TestIntegrationBasic extends AbstractTest {
         }
         assertEquals(users.size(), 10);
     }
+
+    @Test
+    public void test610searchUserFilterQuery() throws Exception {
+        Service service = getService();
+
+        QueryType query = new QueryType();
+        PagingType pagingType = new PagingType();
+        pagingType.setMaxSize(1);
+        pagingType.setOffset(0);
+        query.setPaging(pagingType);
+        SearchFilterType searchFilterType = new SearchFilterType();
+        searchFilterType.setText("name contains \"admin\" or familyName startsWith \"X\"");
+        query.setFilter(searchFilterType);
+
+        SearchResult<UserType> users = service.users().search()
+                .queryFor(UserType.class)
+                .build(query)
+                .options()
+                .resolveNames()
+                .get();
+
+        assertEquals(users.size(), 1);
+    }
+
 
     @Test
     public void test700addSecurityPolicy() throws Exception {

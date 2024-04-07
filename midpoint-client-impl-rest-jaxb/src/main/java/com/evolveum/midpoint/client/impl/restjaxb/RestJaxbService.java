@@ -312,6 +312,15 @@ public class RestJaxbService implements Service {
         return response;
     }
 
+    <T> Response put(String path, T object, Map<String, List<String>> queryParams) throws ObjectNotFoundException {
+
+        client.resetQuery();
+        addQueryParameters(queryParams);
+        Response response = client.replacePath("/" + path).put(object);
+        handleCommonStatuses(response);
+        return response;
+    }
+
     Response get(String path) throws ObjectNotFoundException {
         client.resetQuery();
         Response response = client.replacePath("/" + path).get();

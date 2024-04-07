@@ -15,23 +15,14 @@
  */
 package com.evolveum.midpoint.client.api;
 
+import com.evolveum.midpoint.client.api.verb.Post;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 
 /**
- * @author semancik
+ * @author Z14tk0
  *
  */
-public interface ObjectCollectionService<O extends ObjectType> {
+public interface ObjectReplaceService<O extends ObjectType> extends Post<ObjectReference<O>> {
 
-	ObjectService<O> oid(String oid);
-
-	SearchService<O> search();
-
-	// TODO: get() as search().get()? or vice versa?
-
-	ObjectAddService<O> add(O object);
-	// TODO
-
-    ObjectReplaceService<O> replace(String oid, O object);
-
+    ExecuteOptionSupport.WithPost<ObjectReference<O>> options();
 }

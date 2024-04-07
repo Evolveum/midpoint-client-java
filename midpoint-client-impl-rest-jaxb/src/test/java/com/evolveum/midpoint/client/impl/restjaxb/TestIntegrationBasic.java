@@ -305,6 +305,14 @@ public class TestIntegrationBasic extends AbstractTest {
     }
 
     @Test
+    public void test495replaceUser() throws Exception {
+        UserType user = new UserType();
+        user.setOid(USER_JACK_OID);
+        user.setName(service.util().createPoly("jack"));
+        service.users().replace(USER_JACK_OID, user).post();
+    }
+
+    @Test
     public void test500deleteUserJack() throws Exception {
         service.users().oid(USER_JACK_OID).delete();
 

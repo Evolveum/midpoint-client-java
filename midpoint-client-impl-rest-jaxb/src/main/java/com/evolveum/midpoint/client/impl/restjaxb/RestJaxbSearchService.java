@@ -71,7 +71,8 @@ public class RestJaxbSearchService<O extends ObjectType> extends AbstractObjectT
         Map<String, List<String>> queryParams = new HashMap<>();
 
         var stringOptions = options.optionsAsStringList();
-        if (stringOptions.isEmpty()) {
+
+        if (!stringOptions.isEmpty()) {
             queryParams.put("options", stringOptions);
         }
         if (!options.getInclude().isEmpty()) {

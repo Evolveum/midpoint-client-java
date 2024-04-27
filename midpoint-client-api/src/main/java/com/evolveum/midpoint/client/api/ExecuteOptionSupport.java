@@ -17,6 +17,7 @@ package com.evolveum.midpoint.client.api;
 
 import com.evolveum.midpoint.client.api.verb.Delete;
 import com.evolveum.midpoint.client.api.verb.Post;
+import com.evolveum.midpoint.client.api.verb.Put;
 
 import java.util.List;
 
@@ -51,6 +52,10 @@ public interface ExecuteOptionSupport<S extends ExecuteOptionSupport> {
     }
 
     interface  WithDelete<P> extends ExecuteOptionSupport<WithDelete<P>>, Delete<P> {
+
+    }
+
+    interface WithPut<P> extends ExecuteOptionSupport<WithPut<P>>, Put<P> {
 
     }
 

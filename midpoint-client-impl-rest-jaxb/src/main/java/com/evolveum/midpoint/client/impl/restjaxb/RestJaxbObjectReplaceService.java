@@ -28,16 +28,15 @@ import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 
 /**
  * @author Z14tk0
- * @author Z14tk0
  *
  */
 public class RestJaxbObjectReplaceService<O extends ObjectType> extends AbstractObjectWebResource<O> implements ObjectReplaceService<O> {
 
 	private final O object;
-    private final ExecuteOptionSupport.WithPost<ObjectReference<O>> options = new ExecuteOptionsBuilder.WithPost<ObjectReference<O>>() {
+    private final ExecuteOptionSupport.WithPut<ObjectReference<O>> options = new ExecuteOptionsBuilder.WithPut<ObjectReference<O>>() {
         @Override
-        public TaskFuture<ObjectReference<O>> apost() throws ObjectAlreadyExistsException, ObjectNotFoundException {
-            return RestJaxbObjectReplaceService.this.apost(optionsAsStringList());
+        public TaskFuture<ObjectReference<O>> aput() throws ObjectAlreadyExistsException, ObjectNotFoundException {
+            return RestJaxbObjectReplaceService.this.aput(optionsAsStringList());
         }
     };
 
@@ -47,16 +46,16 @@ public class RestJaxbObjectReplaceService<O extends ObjectType> extends Abstract
 	}
 
     @Override
-    public ExecuteOptionSupport.WithPost<ObjectReference<O>> options() {
+    public ExecuteOptionSupport.WithPut<ObjectReference<O>> options() {
         return options;
     }
 
     @Override
-	public TaskFuture<ObjectReference<O>> apost() throws CommonException {
-        return options().apost();
+	public TaskFuture<ObjectReference<O>> aput() throws CommonException {
+        return options().aput();
     }
 
-    public TaskFuture<ObjectReference<O>> apost(List<String> options) throws ObjectAlreadyExistsException, ObjectNotFoundException {
+    public TaskFuture<ObjectReference<O>> aput(List<String> options) throws ObjectAlreadyExistsException, ObjectNotFoundException {
 
         String restPath = RestUtil.subUrl(Types.findType(getType()).getRestPath(), getOid());
         Response response = getService().put(restPath, object, Map.of("options", options));

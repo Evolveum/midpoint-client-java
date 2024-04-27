@@ -34,6 +34,8 @@ public interface ObjectService<O extends ObjectType> extends Get<O>, Delete<O> {
 
     ObjectRemoveService<O> remove();
 
+    ObjectReplaceService<O> replace(O object);
+
     /**
      * Gets object.
      *

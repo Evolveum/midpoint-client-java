@@ -51,4 +51,8 @@ public abstract class ExecuteOptionsBuilder<S extends ExecuteOptionSupport<S>> i
     public static abstract class WithDelete<P> extends  ExecuteOptionsBuilder<ExecuteOptionSupport.WithDelete<P>> implements ExecuteOptionSupport.WithDelete<P> {
 
     }
+
+    public static abstract class WithPut<P> extends ExecuteOptionsBuilder<ExecuteOptionSupport.WithPut<P>> implements ExecuteOptionSupport.WithPut<P> {
+
+    }
 }

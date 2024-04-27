@@ -32,6 +32,4 @@ public interface ObjectCollectionService<O extends ObjectType> {
 	ObjectAddService<O> add(O object);
 	// TODO
 
-    ObjectReplaceService<O> replace(String oid, O object);
-
 }

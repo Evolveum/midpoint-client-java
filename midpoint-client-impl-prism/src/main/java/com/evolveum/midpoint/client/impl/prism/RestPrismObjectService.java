@@ -56,6 +56,11 @@ public class RestPrismObjectService<O extends ObjectType> extends CommonPrismSer
     }
 
     @Override
+    public ObjectReplaceService<O> replace(O object) throws AuthenticationException {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
     public ObjectReadService<O> read() {
         return new ObjectReadService<O>() {
             @Override

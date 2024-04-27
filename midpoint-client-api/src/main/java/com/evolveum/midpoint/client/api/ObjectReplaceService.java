@@ -15,14 +15,14 @@
  */
 package com.evolveum.midpoint.client.api;
 
-import com.evolveum.midpoint.client.api.verb.Post;
+import com.evolveum.midpoint.client.api.verb.Put;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 
 /**
  * @author Z14tk0
  *
  */
-public interface ObjectReplaceService<O extends ObjectType> extends Post<ObjectReference<O>> {
+public interface ObjectReplaceService<O extends ObjectType> extends Put<ObjectReference<O>> {
 
-    ExecuteOptionSupport.WithPost<ObjectReference<O>> options();
+    ExecuteOptionSupport.WithPut<ObjectReference<O>> options();
 }

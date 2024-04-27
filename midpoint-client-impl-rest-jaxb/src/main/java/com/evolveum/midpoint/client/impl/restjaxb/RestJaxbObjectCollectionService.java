@@ -15,7 +15,10 @@
  */
 package com.evolveum.midpoint.client.impl.restjaxb;
 
-import com.evolveum.midpoint.client.api.*;
+import com.evolveum.midpoint.client.api.ObjectAddService;
+import com.evolveum.midpoint.client.api.ObjectCollectionService;
+import com.evolveum.midpoint.client.api.ObjectService;
+import com.evolveum.midpoint.client.api.SearchService;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 
 /**
@@ -44,10 +47,4 @@ public class RestJaxbObjectCollectionService<O extends ObjectType> extends Abstr
 	}
 
 	//TODO: [katka] modify?
-
-    @Override
-    public ObjectReplaceService<O> replace(String oid, O object) {
-        return new RestJaxbObjectReplaceService<>(getService(), getType(), oid, object);
-    }
-
 }

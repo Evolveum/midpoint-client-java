@@ -68,4 +68,9 @@ public class RestJaxbObjectService<O extends ObjectType> extends AbstractObjectW
     public ObjectRemoveService<O> remove() {
         return new RestJaxbObjectRemoveService<>(getService(), getType(), getOid());
     }
+
+    @Override
+    public ObjectReplaceService<O> replace(O object) {
+        return new RestJaxbObjectReplaceService<>(getService(), getType(), getOid(), object);
+    }
 }

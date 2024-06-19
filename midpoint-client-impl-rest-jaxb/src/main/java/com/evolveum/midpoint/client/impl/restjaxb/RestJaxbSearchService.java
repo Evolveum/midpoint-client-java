@@ -105,7 +105,13 @@ public class RestJaxbSearchService<O extends ObjectType> extends AbstractObjectT
 
 	@SuppressWarnings("unchecked")
 	private List<O> getSearchResultList(Response response) {
-		ObjectListType resultList = response.readEntity(ObjectListType.class);
-		return (List<O>) resultList.getObject();
-	}
+        if (response.hasEntity()) {
+
+            ObjectListType resultList = response.readEntity(ObjectListType.class);
+            return (List<O>) resultList.getObject();
+        } else {
+            return null;
+        }
+
+    }
 }

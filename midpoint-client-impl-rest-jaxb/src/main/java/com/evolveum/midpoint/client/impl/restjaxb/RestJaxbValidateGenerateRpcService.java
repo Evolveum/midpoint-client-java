@@ -53,21 +53,29 @@ public class RestJaxbValidateGenerateRpcService implements ValidateGenerateRpcSe
     @Override
 	public TaskFuture<PolicyItemsDefinitionType> apost() throws CommonException {
 
-		Response response = service.post(path, policyItemDefinition);
+        Response response = service.post(path, policyItemDefinition);
 
-		switch (response.getStatus()) {
-        case 200:
-        case 240:
-        case 250:
-            PolicyItemsDefinitionType itemsDefinitionType = response.readEntity(PolicyItemsDefinitionType.class);
-            return new RestJaxbCompletedFuture<>(itemsDefinitionType);
-		case 409:
-			OperationResultType operationResultType = response.readEntity(OperationResultType.class);
-	        throw new PolicyViolationException(RestUtil.getFailedValidationMessage(operationResultType));
-        default:
-            throw new UnsupportedOperationException("Implement other status codes, unsupported return status: " + response.getStatus());
+        switch (response.getStatus()) {
+            case 200:
+                if (response.hasEntity()) {
+
+                    PolicyItemsDefinitionType itemsDefinitionType = response.readEntity(PolicyItemsDefinitionType.class);
+                    return new RestJaxbCompletedFuture<>(itemsDefinitionType);
+                } else {
+                    // Return empty policy definition type
+                    return new RestJaxbCompletedFuture<>(new PolicyItemsDefinitionType());
+                }
+            case 240:
+            case 250:
+                OperationResultType operationResult = response.readEntity(OperationResultType.class);
+                throw new PartialErrorException(RestUtil.getOperationResultTypeMessage(operationResult));
+            case 409:
+                OperationResultType operationResultType = response.readEntity(OperationResultType.class);
+                throw new PolicyViolationException(RestUtil.getFailedValidationMessage(operationResultType));
+            default:
+                throw new UnsupportedOperationException("Implement other status codes, unsupported return status: " + response.getStatus());
+        }
     }
-	}
 
 	@Override
 	public PolicyItemsDefinitionBuilder items() {

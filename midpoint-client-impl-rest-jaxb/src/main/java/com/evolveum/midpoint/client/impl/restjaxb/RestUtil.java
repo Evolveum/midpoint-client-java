@@ -193,4 +193,15 @@ public class RestUtil {
         return locationSegments[locationSegments.length-1];
     }
 
+    public static String getOperationResultTypeMessage(OperationResultType operationResultType) {
+        if (operationResultType.getMessage() != null) {
+            return operationResultType.getMessage();
+        }
+        if (operationResultType.getUserFriendlyMessage() != null) {
+            LocalizableMessageType localizableMessage = operationResultType.getUserFriendlyMessage();
+            return getStringMessage(localizableMessage);
+        }
+        return null;
+    }
+
 }

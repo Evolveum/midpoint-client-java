@@ -22,7 +22,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.evolveum.midpoint.client</groupId>
-        <version>4.8.3.p1</version>
+        <version>4.8.4</version>
     </parent>
 
     <artifactId>midpoint-client-impl-prism</artifactId>

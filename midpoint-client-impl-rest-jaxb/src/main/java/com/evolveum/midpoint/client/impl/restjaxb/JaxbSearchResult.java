@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import jakarta.ws.rs.core.MultivaluedMap;
 import org.apache.cxf.common.util.CollectionUtils;
 
 import com.evolveum.midpoint.client.api.SearchResult;
@@ -34,6 +35,7 @@ import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 public class JaxbSearchResult<O extends ObjectType> implements SearchResult<O> {
 
 	private List<O> list = null;
+    private MultivaluedMap<String, Object> headers;
 
 	public JaxbSearchResult() {
 	}
@@ -42,6 +44,16 @@ public class JaxbSearchResult<O extends ObjectType> implements SearchResult<O> {
 		super();
 		this.list = list;
 	}
+
+    public JaxbSearchResult(List<O> list, MultivaluedMap<String, Object> headers) {
+        this.list = list;
+        this.headers = headers;
+    }
+
+    @Override
+    public MultivaluedMap<String, Object> getHeaders() {
+        return headers;
+    }
 
 	@Override
 	public int size() {

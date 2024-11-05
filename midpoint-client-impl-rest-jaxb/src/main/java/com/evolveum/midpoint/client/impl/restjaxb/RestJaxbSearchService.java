@@ -84,7 +84,7 @@ public class RestJaxbSearchService<O extends ObjectType> extends AbstractObjectT
         Response response = getService().post(path, query, queryParams);
 
         if (Status.OK.getStatusCode() == response.getStatus()) {
-            return new JaxbSearchResult<>(getSearchResultList(response));
+            return new JaxbSearchResult<>(getSearchResultList(response), response.getHeaders());
         }
 
         if (Status.NOT_FOUND.getStatusCode() == response.getStatus()) {

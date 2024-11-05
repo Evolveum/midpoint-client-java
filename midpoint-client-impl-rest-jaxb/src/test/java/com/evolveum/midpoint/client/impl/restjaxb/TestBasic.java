@@ -25,6 +25,7 @@ import com.evolveum.prism.xml.ns._public.query_3.QueryType;
 import com.evolveum.prism.xml.ns._public.query_3.SearchFilterType;
 import com.evolveum.prism.xml.ns._public.types_3.ItemPathType;
 
+import jakarta.ws.rs.core.MultivaluedMap;
 import org.apache.cxf.endpoint.Server;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -227,6 +228,15 @@ public class TestBasic extends AbstractTest {
         assertEquals(result.size(), 0);
     }
 
+    @Test
+    public void test015SearchResultResponseHeaders() throws Exception {
+        Service service = getService();
+
+        SearchResult<? extends ObjectType> searchResult = service.users().search().get();
+
+        MultivaluedMap<String, Object> responseHeaders = searchResult.getHeaders();
+        assertNotNull(responseHeaders);
+    }
 
     @Test
     public void test011ValuePolicyGet() throws Exception {

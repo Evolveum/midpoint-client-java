@@ -25,6 +25,7 @@ import com.evolveum.prism.xml.ns._public.query_3.QueryType;
 import com.evolveum.prism.xml.ns._public.query_3.SearchFilterType;
 import com.evolveum.prism.xml.ns._public.types_3.ItemPathType;
 
+import jakarta.ws.rs.core.MultivaluedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
@@ -414,6 +415,13 @@ public class TestIntegrationBasic extends AbstractTest {
         assertEquals(users.size(), 1);
     }
 
+    @Test
+    public void test615SearchResultResponseHeaders() throws Exception {
+        SearchResult<? extends ObjectType> searchResult = service.users().search().queryFor(UserType.class).get();
+
+        MultivaluedMap<String, Object> responseHeaders = searchResult.getHeaders();
+        assertNotNull(responseHeaders);
+    }
 
     @Test
     public void test700addSecurityPolicy() throws Exception {

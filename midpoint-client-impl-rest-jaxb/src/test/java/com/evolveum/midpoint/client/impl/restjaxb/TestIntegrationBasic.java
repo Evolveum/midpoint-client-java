@@ -25,6 +25,7 @@ import com.evolveum.prism.xml.ns._public.query_3.QueryType;
 import com.evolveum.prism.xml.ns._public.query_3.SearchFilterType;
 import com.evolveum.prism.xml.ns._public.types_3.ItemPathType;
 
+import jakarta.ws.rs.core.MultivaluedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
@@ -414,6 +415,31 @@ public class TestIntegrationBasic extends AbstractTest {
         assertEquals(users.size(), 1);
     }
 
+    @Test
+    public void test615SearchResultResponseHeaders() throws Exception {
+        SearchResult<? extends ObjectType> searchResult = service.users().search().queryFor(UserType.class).get();
+
+        MultivaluedMap<String, Object> responseHeaders = searchResult.getHeaders();
+        assertNotNull(responseHeaders);
+    }
+
+    /**
+     * Currently this test will pass with only with midpoint branch Z14tk0:feature/rest-search-total-count-header (currently found in this PR https://github.com/Evolveum/midpoint/pull/232)
+     */
+    @Test
+    public void test620UserSearchWithTotalCount() throws Exception {
+        SearchResult<UserType> searchResult = service.users().search().queryFor(UserType.class).build()
+                .options()
+                .returnTotalCount()
+                .get();
+
+        MultivaluedMap<String, Object> headers = searchResult.getHeaders();
+        assertNotNull(headers);
+        assertTrue(headers.containsKey("X-Total-Count"));
+
+        String totalCountHeader = headers.getFirst("X-Total-Count").toString();
+        assertNotNull(totalCountHeader);
+    }
 
     @Test
     public void test700addSecurityPolicy() throws Exception {

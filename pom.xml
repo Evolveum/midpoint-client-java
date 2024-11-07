@@ -48,6 +48,7 @@
         <surefire.version>3.5.2</surefire.version>
         <jakarta.annotation.version>3.0.0</jakarta.annotation.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
+        <jakarta.ws.rs-api.version>4.0.0</jakarta.ws.rs-api.version>
     </properties>
 
     <scm>
@@ -136,6 +137,11 @@
                 <groupId>jakarta.xml.bind-api</groupId>
                 <artifactId>jakarta.xml.bind-impl</artifactId>
                 <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.ws.rs</groupId>
+                <artifactId>jakarta.ws.rs-api</artifactId>
+                <version>${jakarta.ws.rs-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>

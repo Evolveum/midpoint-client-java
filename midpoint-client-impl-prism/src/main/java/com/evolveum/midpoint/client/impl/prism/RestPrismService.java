@@ -363,6 +363,11 @@ public class RestPrismService implements Service {
     }
 
     @Override
+    public FocusCollectionService<ServiceType> services() {
+        return new RestPrismFocusCollectionService<>(this, ObjectTypes.SERVICE);
+    }
+
+    @Override
     public ServiceUtil util() {
         return null;
     }

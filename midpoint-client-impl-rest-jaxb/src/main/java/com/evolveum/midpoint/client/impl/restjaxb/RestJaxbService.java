@@ -251,6 +251,11 @@ public class RestJaxbService implements Service {
     }
 
     @Override
+    public FocusCollectionService<ServiceType> services() {
+        return new RestJaxbFocusCollectionService<>(this, Types.SERVICES.getRestPath(), ServiceType.class);
+    }
+
+    @Override
     public <T> RpcService<T> rpc() {
         return new RestJaxbRpcService<>(this);
     }

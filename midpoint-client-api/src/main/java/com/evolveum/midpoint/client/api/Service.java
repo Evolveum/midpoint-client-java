@@ -74,6 +74,8 @@ public interface Service {
 
     FocusCollectionService<OrgType> orgs();
 
+    FocusCollectionService<ServiceType> services();
+
 	ServiceUtil util();
 
 	ScriptingUtil scriptingUtil();

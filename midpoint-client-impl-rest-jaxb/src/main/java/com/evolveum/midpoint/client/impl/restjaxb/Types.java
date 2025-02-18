@@ -51,6 +51,7 @@ public enum Types {
 	SHADOWS(ShadowType.class, new QName(SchemaConstants.NS_COMMON, "ShadowType"), new QName(SchemaConstants.NS_COMMON, "shadow"), "shadows"),
 	ROLES(RoleType.class, new QName(SchemaConstants.NS_COMMON, "RoleType"), new QName(SchemaConstants.NS_COMMON, "role"), "roles"),
 	ORGS(OrgType.class, new QName(SchemaConstants.NS_COMMON, "OrgType"), new QName(SchemaConstants.NS_COMMON, "org"), "orgs"),
+	SERVICES(ServiceType.class, new QName(SchemaConstants.NS_COMMON, "ServiceType"), new QName(SchemaConstants.NS_COMMON, "service"), "services"),
     ARCHETYPES(ArchetypeType.class, new QName(SchemaConstants.NS_COMMON, "ArchetypeType"), new QName(SchemaConstants.NS_COMMON, "archetype"), "archetypes"),
     FORMS(FormType.class, new QName(SchemaConstants.NS_COMMON, "FormType"), new QName(SchemaConstants.NS_COMMON, "form"), "forms"),
     SEQUENCES(SequenceType.class, new QName(SchemaConstants.NS_COMMON, "SequenceType"), new QName(SchemaConstants.NS_COMMON, "sequence"), "sequences"),

@@ -76,7 +76,9 @@ public interface Service {
 
     FocusCollectionService<ServiceType> services();
 
-	ServiceUtil util();
+    ObjectCollectionService<AccessCertificationDefinitionType> accessCertificationDefinitions();
+
+    ServiceUtil util();
 
 	ScriptingUtil scriptingUtil();
 

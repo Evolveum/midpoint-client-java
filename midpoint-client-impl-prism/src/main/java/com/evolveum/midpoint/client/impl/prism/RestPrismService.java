@@ -368,6 +368,11 @@ public class RestPrismService implements Service {
     }
 
     @Override
+    public ObjectCollectionService<AccessCertificationDefinitionType> accessCertificationDefinitions() {
+        return new RestPrismObjectCollectionService<>(this, ObjectTypes.ACCESS_CERTIFICATION_DEFINITION);
+    }
+
+    @Override
     public ServiceUtil util() {
         return null;
     }

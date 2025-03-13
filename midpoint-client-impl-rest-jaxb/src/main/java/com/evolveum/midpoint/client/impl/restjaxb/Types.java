@@ -55,6 +55,7 @@ public enum Types {
     ARCHETYPES(ArchetypeType.class, new QName(SchemaConstants.NS_COMMON, "ArchetypeType"), new QName(SchemaConstants.NS_COMMON, "archetype"), "archetypes"),
     FORMS(FormType.class, new QName(SchemaConstants.NS_COMMON, "FormType"), new QName(SchemaConstants.NS_COMMON, "form"), "forms"),
     SEQUENCES(SequenceType.class, new QName(SchemaConstants.NS_COMMON, "SequenceType"), new QName(SchemaConstants.NS_COMMON, "sequence"), "sequences"),
+    ACCESS_CERTIFICATION_DEFINITION(AccessCertificationDefinitionType.class, new QName(SchemaConstants.NS_COMMON, "AccessCertificationDefinitionType"), new QName(SchemaConstants.NS_COMMON, "accessCertificationDefinition"), "accessCertificationDefinitions"),
 
     LOOKUP_TABLE(LookupTableType.class, new QName(SchemaConstants.NS_COMMON, "LookupTableType"), new QName(SchemaConstants.NS_COMMON, "lookupTable"), "lookupTables"),
 

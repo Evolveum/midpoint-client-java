@@ -256,6 +256,11 @@ public class RestJaxbService implements Service {
     }
 
     @Override
+    public ObjectCollectionService<AccessCertificationDefinitionType> accessCertificationDefinitions() {
+        return new RestJaxbObjectCollectionService<>(this, Types.ACCESS_CERTIFICATION_DEFINITION.getRestPath(), AccessCertificationDefinitionType.class);
+    }
+
+    @Override
     public <T> RpcService<T> rpc() {
         return new RestJaxbRpcService<>(this);
     }

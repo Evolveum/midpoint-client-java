@@ -42,7 +42,7 @@ podTemplate(
                         df -h
                     fi
 
-                    mvn -B -ntp -Dmaven.test.failure.ignore clean deploy
+                    mvn -B -ntp -Dmaven.test.failure.ignore -P sbom,dependencytrack clean deploy
 
                     if [ '${params.VERBOSE}' = '1' ]
                     then

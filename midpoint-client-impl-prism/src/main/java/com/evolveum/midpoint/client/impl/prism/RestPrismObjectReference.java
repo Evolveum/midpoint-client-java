@@ -15,16 +15,27 @@
  */
 package com.evolveum.midpoint.client.impl.prism;
 
+import com.evolveum.midpoint.client.api.AbstractObjectWebResource;
 import com.evolveum.midpoint.client.api.ObjectReference;
 import com.evolveum.midpoint.client.api.exception.ObjectNotFoundException;
+import com.evolveum.midpoint.client.api.exception.SchemaException;
+import com.evolveum.midpoint.schema.constants.ObjectTypes;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 
-public class RestPrismObjectReference<O extends ObjectType> implements ObjectReference<O> {
+public class RestPrismObjectReference<O extends ObjectType> extends AbstractObjectWebResource<O> implements ObjectReference<O> {
 
     private String oid;
     private Class<O> type;
+    private O object = null;
 
-    public RestPrismObjectReference(String oid, Class type) {
+    public RestPrismObjectReference(String oid, Class<O> type) {
+        super(null, type, oid);
+        this.oid = oid;
+        this.type = type;
+    }
+
+    public RestPrismObjectReference(RestPrismService service, String oid, Class<O> type) {
+        super(service, type, oid);
         this.oid = oid;
         this.type = type;
     }
@@ -41,7 +52,7 @@ public class RestPrismObjectReference<O extends ObjectType> implements ObjectRef
 
     @Override
     public O getObject() throws ObjectNotFoundException {
-        return null;
+        return object;
     }
 
     @Override
@@ -50,7 +61,10 @@ public class RestPrismObjectReference<O extends ObjectType> implements ObjectRef
     }
 
     @Override
-    public O get() throws ObjectNotFoundException {
-        return null;
+    public O get() throws ObjectNotFoundException, SchemaException {
+        if (object == null) {
+            object = ((RestPrismService) getService()).getObject(ObjectTypes.getObjectType(getType()), getOid());
+        }
+        return object;
     }
 }

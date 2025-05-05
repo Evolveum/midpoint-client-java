@@ -34,7 +34,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.source.version>11</project.source.version>
 
-        <midpoint.version>4.8.8-SNAPSHOT</midpoint.version>
+        <midpoint.version>4.8.9-SNAPSHOT</midpoint.version>
 
         <testng.version>7.6.1</testng.version>
         <cxf.version>4.0.7</cxf.version>

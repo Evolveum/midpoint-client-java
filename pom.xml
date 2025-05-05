@@ -21,7 +21,7 @@
 
     <groupId>com.evolveum.midpoint.client</groupId>
     <artifactId>parent</artifactId>
-    <version>4.8.5</version>
+    <version>4.8.6-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

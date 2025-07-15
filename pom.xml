@@ -47,7 +47,7 @@
         <activation.version>2.1.3</activation.version>
         <surefire.version>3.5.2</surefire.version>
         <jakarta.annotation.version>3.0.0</jakarta.annotation.version>
-        <commons-lang3.version>3.17.0</commons-lang3.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
         <jakarta.ws.rs-api.version>4.0.0</jakarta.ws.rs-api.version>
     </properties>
 

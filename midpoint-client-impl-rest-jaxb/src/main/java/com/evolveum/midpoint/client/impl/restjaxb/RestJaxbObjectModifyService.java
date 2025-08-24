@@ -16,7 +16,7 @@
 package com.evolveum.midpoint.client.impl.restjaxb;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,6 @@ import com.evolveum.midpoint.client.api.*;
 
 import com.evolveum.midpoint.client.api.exception.*;
 
-import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.core.Response;
 
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
@@ -86,6 +85,11 @@ public class RestJaxbObjectModifyService<O extends ObjectType> extends AbstractO
     public RestJaxbObjectModifyService<O> delete(Map<String, Object> modifications){
         addModifications(modifications, ModificationTypeType.DELETE);
         return this;
+    }
+
+    @Override
+    public RestJaxbObjectModifyService<O> setModifications(InputStream inputStream) throws SchemaException {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     private void addModification(String path, Object value, ModificationTypeType modificationType){

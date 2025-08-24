@@ -16,8 +16,10 @@
 package com.evolveum.midpoint.client.impl.prism;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import jakarta.ws.rs.BadRequestException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.client5.http.fluent.Request;
 import org.apache.hc.client5.http.fluent.Response;
@@ -120,6 +122,14 @@ public class RestPrismService implements Service {
         return object.asObjectable();
     }
 
+    Object parseObjectModification(InputStream inputStream) throws SchemaException {
+        try {
+            return prismContext.parserFor(inputStream).json().parseRealValue();
+        } catch (com.evolveum.midpoint.util.exception.SchemaException | IOException e) {
+            throw new SchemaException(e.getMessage(), e);
+        }
+    }
+
     OperationResult getOperationResult(HttpEntity httpEntity) throws SchemaException {
         OperationResultType result = parseOperationResult(httpEntity);
         return OperationResult.createOperationResult(result);
@@ -156,15 +166,7 @@ public class RestPrismService implements Service {
 
     ClassicHttpResponse httpPost(String relativePath, HttpEntity object, List<String> options) throws SchemaException {
         StringBuilder uri = new StringBuilder(baseUrl + "/" + relativePath);
-        if (options != null && options.size() > 0) {
-            uri.append("?options=");
-            for (String option : options) {
-                if (options.indexOf(option) > 0) {
-                    uri.append(",");
-                }
-                uri.append(option);
-            }
-        }
+        appendOptionsToUri(options, uri);
         Request req = Request.post(uri.toString());
         if (object != null) {
             req.body(object);
@@ -176,18 +178,25 @@ public class RestPrismService implements Service {
         }
     }
 
+    ClassicHttpResponse httpPatch(String relativePath, HttpEntity object, List<String> options, String oid) throws SchemaException {
+        StringBuilder uri = new StringBuilder(baseUrl + "/" + relativePath + "/" + oid);
+        appendOptionsToUri(options, uri);
+        Request req = Request.patch(uri.toString());
+        if (object != null) {
+            req.body(object);
+        }
+
+        try {
+            return (ClassicHttpResponse) req.execute(httpClient).returnResponse();
+        } catch (IOException e) {
+            throw new SchemaException(e.getMessage(), e);
+        }
+    }
+
     Response httpDelete(String fullPath, List<String> options) {
 
         StringBuilder uri = new StringBuilder(fullPath);
-        if (options != null && options.size() > 0) {
-            uri.append("?options=");
-            for (String option : options) {
-                if (options.indexOf(option) > 0) {
-                    uri.append(",");
-                }
-                uri.append(option);
-            }
-        }
+        appendOptionsToUri(options, uri);
         Request req = Request.delete(uri.toString());
         try {
             return req.execute(httpClient);
@@ -221,6 +230,55 @@ public class RestPrismService implements Service {
         }
     }
 
+    <O> String modifyObject(ObjectTypes type, O object, List<String> options, String oid) throws ObjectAlreadyExistsException, SchemaException, ObjectNotFoundException {
+        ClassicHttpResponse httpResponse = httpPatch(type.getRestType(), createEntity(object), options, oid);
+
+        OperationResult result = null;
+        return switch (httpResponse.getCode()) {
+            case HttpStatus.SC_NO_CONTENT, 240 -> getOidOrDefault(httpResponse, oid);
+            case 250 -> throw new PartialErrorException(getOperationResult(httpResponse.getEntity()).getMessage());
+            case HttpStatus.SC_CONFLICT -> {
+                result = getOperationResult(httpResponse.getEntity());
+                throw new ObjectAlreadyExistsException(result.getMessage());
+            }
+            case HttpStatus.SC_FORBIDDEN -> {
+                result = getOperationResult(httpResponse.getEntity());
+                throw new SecurityViolationException(result.getMessage());
+            }
+            case HttpStatus.SC_UNAUTHORIZED -> {
+                result = getOperationResult(httpResponse.getEntity());
+                throw new AuthenticationException(result.getMessage());
+            }
+            case HttpStatus.SC_BAD_REQUEST -> {
+                result = getOperationResult(httpResponse.getEntity());
+                throw new BadRequestException(result.getMessage());
+            }
+            case HttpStatus.SC_NOT_FOUND -> {
+                result = getOperationResult(httpResponse.getEntity());
+                throw new ObjectNotFoundException(result.getMessage());
+            }
+            case HttpStatus.SC_SERVER_ERROR -> {
+                result = getOperationResult(httpResponse.getEntity());
+                throw new InternalServerErrorException(result.getMessage());
+            }
+            default -> throw new UnsupportedOperationException("Not implemented yet: " + httpResponse);
+        };
+    }
+
+    private String getOidOrDefault(ClassicHttpResponse response, String oidReq) {
+        try {
+            return getOidFromLocation(response);
+        } catch (ProtocolException | IllegalStateException e) {
+            return oidReq;
+        }
+    }
+
+    private void appendOptionsToUri(List<String> options, StringBuilder uri) {
+        if (options != null && !options.isEmpty()) {
+            uri.append("?options=").append(String.join(",", options));
+        }
+    }
+
     String getOidFromLocation(HttpResponse httpResponse) throws ProtocolException {
         Header header = httpResponse.getHeader("Location");
         if (header == null) {
@@ -233,7 +291,7 @@ public class RestPrismService implements Service {
         return null;
     }
 
-    private <O extends ObjectType> StringEntity createEntity(O object) throws SchemaException {
+    private <O> StringEntity createEntity(O object) throws SchemaException {
         try {
             return new StringEntity(prismContext.xmlSerializer().serializeRealValue(object), ContentType.APPLICATION_XML);
         } catch (com.evolveum.midpoint.util.exception.SchemaException e) {

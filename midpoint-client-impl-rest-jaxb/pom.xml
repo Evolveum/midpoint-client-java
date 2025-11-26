@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.evolveum.midpoint.client</groupId>
         <artifactId>parent</artifactId>
-        <version>4.10</version>
+        <version>4.11-SNAPSHOT</version>
     </parent>
 
     <artifactId>midpoint-client-impl-rest-jaxb</artifactId>

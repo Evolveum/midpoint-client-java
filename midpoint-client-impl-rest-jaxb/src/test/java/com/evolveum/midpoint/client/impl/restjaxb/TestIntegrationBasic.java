@@ -423,9 +423,6 @@ public class TestIntegrationBasic extends AbstractTest {
         assertNotNull(responseHeaders);
     }
 
-    /**
-     * Currently this test will pass with only with midpoint branch Z14tk0:feature/rest-search-total-count-header (currently found in this PR https://github.com/Evolveum/midpoint/pull/232)
-     */
     @Test
     public void test620UserSearchWithTotalCount() throws Exception {
         SearchResult<UserType> searchResult = service.users().search().queryFor(UserType.class).build()

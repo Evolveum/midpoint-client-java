@@ -258,7 +258,7 @@
                     <configuration>
                         <dependencyTrackBaseUrl>${env.DTRACK_URL}</dependencyTrackBaseUrl>
                         <apiKey>${env.DTRACK_TOKEN}</apiKey>
-                        <parentName>midPoint REST client</parentName>
+                        <parentName>midpoint-client-java</parentName>
                         <parentVersion>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}</parentVersion>
                     </configuration>
                     <executions>

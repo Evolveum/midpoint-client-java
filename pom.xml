@@ -21,7 +21,7 @@
 
     <groupId>com.evolveum.midpoint.client</groupId>
     <artifactId>parent</artifactId>
-    <version>4.8.7-SNAPSHOT</version>
+    <version>4.8.13</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -34,7 +34,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.source.version>11</project.source.version>
 
-        <midpoint.version>4.8.13-SNAPSHOT</midpoint.version>
+        <midpoint.version>4.8.13</midpoint.version>
 
         <testng.version>7.10.2</testng.version>
         <cxf.version>4.2.2</cxf.version>

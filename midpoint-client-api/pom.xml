@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.evolveum.midpoint.client</groupId>
         <artifactId>parent</artifactId>
-        <version>4.9.4-SNAPSHOT</version>
+        <version>4.9.8</version>
     </parent>
 
     <artifactId>midpoint-client-api</artifactId>

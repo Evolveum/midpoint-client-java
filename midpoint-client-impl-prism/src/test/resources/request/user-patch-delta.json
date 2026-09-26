@@ -1,0 +1,18 @@
+{
+    "objectModification": {
+        "itemDelta": [
+            {
+                "modificationType": "add",
+                "path": "assignment",
+                "value": [
+                    {
+                        "targetRef": {
+                            "filter": { "text": ". inOid (\"258cfacc-4705-11e8-b772-874c20402410\")" },
+                            "type": "c:OrgType"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

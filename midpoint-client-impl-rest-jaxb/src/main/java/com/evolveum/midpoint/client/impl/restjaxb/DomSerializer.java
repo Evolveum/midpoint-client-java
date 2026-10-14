@@ -305,7 +305,7 @@ private Element createPropertyValueFilter(String filterType, ItemPathType itemPa
 }
 
 	public Element createNotFilter(Element filter) {
-		Document document = documentBuilder.newDocument();
+		Document document = filter.getOwnerDocument();
 		Element not = document.createElementNS(SchemaConstants.NS_QUERY, FILTER_NOT);
 		not.appendChild(filter);
 		return not;

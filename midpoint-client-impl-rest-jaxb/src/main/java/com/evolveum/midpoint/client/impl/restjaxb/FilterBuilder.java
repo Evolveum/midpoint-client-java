@@ -38,6 +38,7 @@ public class FilterBuilder<O extends ObjectType> implements FilterEntryOrEmpty<O
 
 	private NAryLogicalOperatorFilterClauseType currentFilter;
 	private FilterLogicalSymbol lastLogicalSymbol;
+	private boolean negateNextFilter;
 
 	private RestJaxbService service;
 	private Class<O> type;
@@ -49,15 +50,18 @@ public class FilterBuilder<O extends ObjectType> implements FilterEntryOrEmpty<O
 		this.type = type;
 		this.currentFilter = new NAryLogicalOperatorFilterClauseType();
 		lastLogicalSymbol = null;
+		negateNextFilter = false;
 
 	}
 
-	private FilterBuilder(RestJaxbService service, Class<O> type, NAryLogicalOperatorFilterClauseType currentFilter, FilterLogicalSymbol logicalSymbol, PagingType paging) {
+	private FilterBuilder(RestJaxbService service, Class<O> type, NAryLogicalOperatorFilterClauseType currentFilter,
+            FilterLogicalSymbol logicalSymbol, PagingType paging, boolean negateNextFilter) {
 		this.service = service;
 		this.type = type;
 		this.currentFilter = currentFilter;
 		this.lastLogicalSymbol = logicalSymbol;
 		this.paging = paging;
+		this.negateNextFilter = negateNextFilter;
 	}
 
 
@@ -65,8 +69,8 @@ public class FilterBuilder<O extends ObjectType> implements FilterEntryOrEmpty<O
         if (!currentFilter.getFilterClause().isEmpty() && lastLogicalSymbol == null) {
             throw new IllegalStateException("lastLogicalSymbol is empty but there is already some filter present: " + currentFilter);
         }
-            NAryLogicalOperatorFilterClauseType newFilter = appendAtomicFilter(subfilter, negated, lastLogicalSymbol);
-            return new FilterBuilder<>(service, type, newFilter, null, paging);
+        NAryLogicalOperatorFilterClauseType newFilter = appendAtomicFilter(subfilter, negated || negateNextFilter, lastLogicalSymbol);
+        return new FilterBuilder<>(service, type, newFilter, null, paging, false);
     }
 
 	private NAryLogicalOperatorFilterClauseType appendAtomicFilter(Element subfilter, boolean negated, FilterLogicalSymbol lastLogicalSymbol) {
@@ -196,7 +200,7 @@ public class FilterBuilder<O extends ObjectType> implements FilterEntryOrEmpty<O
 		if (this.lastLogicalSymbol != null) {
             throw new IllegalStateException("Two logical symbols in a sequence");
         }
-        return new FilterBuilder<O>(service, type, currentFilter, newLogicalSymbol, paging);
+        return new FilterBuilder<O>(service, type, currentFilter, newLogicalSymbol, paging, negateNextFilter);
 	}
 
 
@@ -229,8 +233,8 @@ public class FilterBuilder<O extends ObjectType> implements FilterEntryOrEmpty<O
 
 @Override
 public AtomicFilterEntry<O> not() {
-	// TODO Auto-generated method stub
-	return null;
+    // Negate the next atomic filter, not the entire query.
+	return new FilterBuilder<>(service, type, currentFilter, lastLogicalSymbol, paging, true);
 }
 
 @Override
@@ -284,21 +288,21 @@ private FilterBuilder<O> addOrdering(ItemPathType orderBy, OrderDirectionType di
 	paging.setOrderDirection(direction);
 	paging.setOrderBy(orderBy);
 
-	return new FilterBuilder<>(service, type, currentFilter, null, paging);
+	return new FilterBuilder<>(service, type, currentFilter, null, paging, negateNextFilter);
 }
 
 private FilterBuilder<O> setOffset(Integer n) {
 	paging = getPaging();
 	paging.setOffset(n);
 
-	return new FilterBuilder<>(service, type, currentFilter, null, paging);
+	return new FilterBuilder<>(service, type, currentFilter, null, paging, negateNextFilter);
 }
 
 private FilterBuilder<O> setMaxSize(Integer n) {
 	paging = getPaging();
 	paging.setMaxSize(n);
 
-	return new FilterBuilder<>(service, type, currentFilter, null, paging);
+	return new FilterBuilder<>(service, type, currentFilter, null, paging, negateNextFilter);
 }
 
 private PagingType getPaging() {

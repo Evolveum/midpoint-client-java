@@ -4,6 +4,7 @@
     <test name="Client Basic" preserve-order="true" parallel="false" verbose="1">
         <classes>
             <class name="com.evolveum.midpoint.client.impl.restjaxb.TestBasic"/>
+            <class name="com.evolveum.midpoint.client.impl.restjaxb.TestQueryBuilder"/>
             <class name="com.evolveum.midpoint.client.impl.restjaxb.TestServiceUtil"/>
         </classes>
     </test>

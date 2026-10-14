@@ -289,8 +289,8 @@ public class RestJaxbQueryBuilder<O extends ObjectType> implements ConditionEntr
 
 	@Override
 	public AtomicFilterExit<O> isNull() {
-		// TODO Auto-generated method stub
-		return null;
+        // A value-less equality filter represents a missing item.
+		return eq();
 	}
 
 	@Override

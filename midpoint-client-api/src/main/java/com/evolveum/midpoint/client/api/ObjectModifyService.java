@@ -15,10 +15,10 @@
  */
 package com.evolveum.midpoint.client.api;
 
-import java.util.List;
+import java.io.InputStream;
 import java.util.Map;
 
-import com.evolveum.midpoint.client.api.exception.CommonException;
+import com.evolveum.midpoint.client.api.exception.SchemaException;
 import com.evolveum.midpoint.client.api.verb.Post;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 
@@ -32,6 +32,7 @@ public interface ObjectModifyService <O extends ObjectType> extends Post<ObjectR
     ObjectModifyService<O> replace(Map<String, Object> modifications);
     ObjectModifyService<O> delete(String path, Object value);
     ObjectModifyService<O> delete(Map<String, Object> modifications);
+    ObjectModifyService<O> setModifications(InputStream inputStream) throws SchemaException;
 
     ExecuteOptionSupport.WithPost<ObjectReference<O>> options();
 
